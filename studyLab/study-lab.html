@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Study Lab — 10 AI Tools</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A1220; --bg2:#0F1B33; --surface:rgba(255,255,255,0.045); --surface2:rgba(255,255,255,0.07);
+  --ink:#EAF1FB; --ink-dim:#93A6C4; --line:rgba(255,255,255,0.10);
+  --blue:#4EA1FF; --blue2:#7C8CFF; --cyan:#6EE7FF; --sage:#5FD9A4; --rose:#FF7A7A; --radius:14px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){ --bg:#EEF4FF; --bg2:#DCE9FF; --surface:#FFFFFF; --surface2:#F1F6FF; --ink:#101B33; --ink-dim:#54698F; --line:#D2E0FA; }
+}
+:root[data-theme="light"]{ --bg:#EEF4FF; --bg2:#DCE9FF; --surface:#FFFFFF; --surface2:#F1F6FF; --ink:#101B33; --ink-dim:#54698F; --line:#D2E0FA; }
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px); height:100%}
+body{height:100%;margin:0;color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:15px;line-height:1.5;
+  background:
+    radial-gradient(1100px 550px at 85% -10%, color-mix(in srgb, var(--blue) 22%, transparent), transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, color-mix(in srgb, var(--blue2) 16%, transparent), transparent 60%),
+    linear-gradient(180deg, var(--bg), var(--bg2));
+  background-attachment:fixed;
+}
+@media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
+::selection{background:var(--blue);color:#06101F}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+h1,h2,h3,.brand{font-family:Lora,Georgia,serif}
+.app{display:flex;min-height:100vh}
+nav.side{width:230px;flex:none;background:linear-gradient(180deg, color-mix(in srgb, var(--blue) 8%, transparent), transparent 40%), var(--surface);backdrop-filter:blur(14px);border-right:1px solid var(--line);padding:20px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{font-size:20px;font-weight:700;padding:4px 10px 18px;color:var(--ink)}
+.brand span{background:linear-gradient(90deg,var(--blue),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.navbtn{display:block;width:100%;text-align:left;background:none;border:none;color:var(--ink-dim);padding:10px 12px;border-radius:9px;font-size:14px;cursor:pointer;margin-bottom:2px;position:relative;transition:background .15s,color .15s}
+.navbtn:hover{background:var(--surface2);color:var(--ink)}
+.navbtn.active{background:linear-gradient(90deg,var(--blue),var(--blue2));color:#06101F;font-weight:600;box-shadow:0 4px 16px color-mix(in srgb, var(--blue) 45%, transparent)}
+main{flex:1;padding:32px 40px;max-width:900px}
+main.wide{max-width:1080px}
+.tool{display:none}
+.tool.active{display:block}
+.hero{padding:44px 0 8px;animation:heroIn .7s ease both}
+@keyframes heroIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hero h1{font-size:48px;line-height:1.05;margin:0 0 14px;letter-spacing:-.5px}
+.hero h1 span{background:linear-gradient(90deg,var(--blue),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--ink-dim);font-size:16px;max-width:56ch;margin:0 0 34px}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.tcard{background:var(--surface);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:16px;padding:20px;text-align:left;cursor:pointer;color:var(--ink);transition:border-color .2s,transform .2s,box-shadow .2s;animation:cardIn .5s ease both}
+.tcard:nth-child(1){animation-delay:.02s}.tcard:nth-child(2){animation-delay:.06s}.tcard:nth-child(3){animation-delay:.1s}.tcard:nth-child(4){animation-delay:.14s}.tcard:nth-child(5){animation-delay:.18s}.tcard:nth-child(6){animation-delay:.22s}.tcard:nth-child(7){animation-delay:.26s}.tcard:nth-child(8){animation-delay:.3s}.tcard:nth-child(9){animation-delay:.34s}.tcard:nth-child(10){animation-delay:.38s}
+@keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.tcard:hover{border-color:color-mix(in srgb, var(--blue) 60%, var(--line));transform:translateY(-4px);box-shadow:0 14px 34px -12px color-mix(in srgb, var(--blue) 45%, transparent)}
+.tcard .ic{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;background:linear-gradient(135deg, color-mix(in srgb, var(--blue) 30%, transparent), color-mix(in srgb, var(--blue2) 22%, transparent));border:1px solid var(--line)}
+.tcard h3{margin:0 0 6px;font-size:16px}
+.tcard p{margin:0;color:var(--ink-dim);font-size:13px;line-height:1.4}
+h2{font-size:26px;margin:0 0 4px}
+.sub{color:var(--ink-dim);margin:0 0 22px;max-width:64ch}
+.card{background:var(--surface);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin-bottom:16px;box-shadow:0 20px 50px -30px rgba(0,0,0,.5)}
+label{display:block;font-size:13px;color:var(--ink-dim);margin:10px 0 4px}
+input[type=text],input[type=number],input[type=date],textarea{width:100%;background:color-mix(in srgb, var(--bg) 60%, transparent);border:1px solid var(--line);border-radius:9px;color:var(--ink);padding:10px 12px;font-family:inherit;font-size:14px;transition:border-color .15s,box-shadow .15s}
+input:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px color-mix(in srgb, var(--blue) 25%, transparent);outline:none}
+textarea{min-height:80px;resize:vertical}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row>*{flex:1;min-width:160px}
+.btn{background:linear-gradient(90deg,var(--blue),var(--blue2));color:#06101F;border:none;padding:11px 20px;border-radius:9px;font-weight:600;cursor:pointer;font-size:14px;margin-top:14px;transition:transform .15s,box-shadow .15s;box-shadow:0 6px 20px -6px color-mix(in srgb, var(--blue) 55%, transparent)}
+.btn:hover{transform:translateY(-1px);box-shadow:0 10px 26px -6px color-mix(in srgb, var(--blue) 65%, transparent)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--ink);box-shadow:none}
+.btn.ghost:hover{border-color:var(--blue);box-shadow:none}
+.btn:focus-visible,.navbtn:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.out{white-space:pre-wrap;background:color-mix(in srgb, var(--bg) 60%, transparent);border:1px solid var(--line);border-radius:9px;padding:14px;margin-top:14px;min-height:40px;overflow-x:auto}
+.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;margin:2px;background:var(--surface2);color:var(--ink-dim)}
+table{border-collapse:collapse;width:100%;overflow-x:auto;display:block}
+td,th{border:1px solid var(--line);padding:8px 10px;font-size:13px;text-align:left}
+.flip-wrap{perspective:1000px;max-width:420px;margin:14px 0}
+.flip-card{position:relative;width:100%;height:220px;cursor:pointer}
+.flip-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip-card.on .flip-inner{transform:rotateY(180deg)}
+.flip-face{position:absolute;inset:0;backface-visibility:hidden;background:var(--surface2);border:1px solid var(--line);border-radius:14px;display:flex;align-items:center;justify-content:center;padding:18px;text-align:center;font-size:16px;box-shadow:0 16px 34px -18px rgba(0,0,0,.5)}
+.flip-back{transform:rotateY(180deg);background:linear-gradient(135deg,var(--blue),var(--blue2));color:#06101F}
+.chatlog{max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.bubble{max-width:80%;padding:9px 13px;border-radius:14px;font-size:14px}
+.bubble.u{align-self:flex-end;background:linear-gradient(90deg,var(--blue),var(--blue2));color:#06101F}
+.bubble.a{align-self:flex-start;background:var(--surface2)}
+.slidebox{background:var(--surface2);border-radius:14px;padding:26px;min-height:220px;border:1px solid var(--line)}
+.slidebox h3{margin:0 0 12px}
+.tree ul{list-style:none;margin:4px 0 4px 18px;padding-left:14px;border-left:1px solid var(--line)}
+.tree li{margin:4px 0}
+.opt{display:block;width:100%;text-align:left;background:color-mix(in srgb, var(--bg) 60%, transparent);border:1px solid var(--line);color:var(--ink);padding:10px 12px;border-radius:9px;margin:6px 0;cursor:pointer;transition:border-color .15s,transform .1s}
+.opt:hover{border-color:var(--blue)}
+.opt.correct{background:var(--sage);color:#06231A;border-color:var(--sage)}
+.opt.wrong{background:var(--rose);color:#2A0808;border-color:var(--rose)}
+@media (max-width:760px){
+  .app{flex-direction:column}
+  nav.side{width:100%;height:auto;position:static;display:flex;overflow-x:auto;gap:4px;padding:10px}
+  .navbtn{white-space:nowrap;width:auto}
+  main{padding:22px 16px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<nav class="side">
+  <div class="brand">Study<span>Lab</span></div>
+  <button class="navbtn active" data-t="home">Home</button>
+  <button class="navbtn" data-t="resume">Resume Builder</button>
+  <button class="navbtn" data-t="notes">Notes Generator</button>
+  <button class="navbtn" data-t="slides">Slide Generator</button>
+  <button class="navbtn" data-t="mindmap">Mind Map</button>
+  <button class="navbtn" data-t="sheets">Sheets Backend</button>
+  <button class="navbtn" data-t="quiz">Quiz Generator</button>
+  <button class="navbtn" data-t="chat">Doubt Chatbot</button>
+  <button class="navbtn" data-t="flash">Flashcards</button>
+  <button class="navbtn" data-t="planner">Study Planner</button>
+  <button class="navbtn" data-t="ocr">Notes from Photo</button>
+</nav>
+<main class="wide">
+
+<section class="tool active" id="home">
+  <div class="hero">
+    <h1>Study<span>Lab</span></h1>
+    <p>Ten small AI tools for student life, in one place — write a resume, turn notes into flashcards, plan your week, and more. Pick one to get started.</p>
+  </div>
+  <div class="tgrid">
+    <button class="tcard" onclick="goto('resume')"><span class="ic">📄</span><h3>Resume Builder</h3><p>Fill a short form, get a polished resume.</p></button>
+    <button class="tcard" onclick="goto('notes')"><span class="ic">📝</span><h3>Notes Generator</h3><p>Paste a topic, get clean bullet-point notes.</p></button>
+    <button class="tcard" onclick="goto('slides')"><span class="ic">🖥️</span><h3>Slide Generator</h3><p>Turn a topic into a 6-slide presentation.</p></button>
+    <button class="tcard" onclick="goto('mindmap')"><span class="ic">🌳</span><h3>Mind Map</h3><p>Break a syllabus into a visual outline.</p></button>
+    <button class="tcard" onclick="goto('sheets')"><span class="ic">📊</span><h3>Sheets Backend</h3><p>Read and write a live Google Sheet.</p></button>
+    <button class="tcard" onclick="goto('quiz')"><span class="ic">❓</span><h3>Quiz Generator</h3><p>Auto-build a scored multiple-choice quiz.</p></button>
+    <button class="tcard" onclick="goto('chat')"><span class="ic">💬</span><h3>Doubt Chatbot</h3><p>Ask a subject tutor, with memory of the chat.</p></button>
+    <button class="tcard" onclick="goto('flash')"><span class="ic">🃏</span><h3>Flashcards</h3><p>Flip through AI-made revision cards.</p></button>
+    <button class="tcard" onclick="goto('planner')"><span class="ic">🗓️</span><h3>Study Planner</h3><p>Get a day-wise timetable before an exam.</p></button>
+    <button class="tcard" onclick="goto('ocr')"><span class="ic">📷</span><h3>Notes from Photo</h3><p>Summarize handwritten or printed notes.</p></button>
+  </div>
+</section>
+
+<section class="tool" id="resume">
+  <h2>Resume Builder</h2><p class="sub">Fill your details and let AI write a polished resume.</p>
+  <div class="card">
+    <div class="row"><div><label>Name</label><input id="r_name" type="text"></div><div><label>Contact</label><input id="r_contact" type="text" placeholder="email, phone, city"></div></div>
+    <label>Objective</label><textarea id="r_obj" placeholder="One line on what you're aiming for"></textarea>
+    <label>Education</label><textarea id="r_edu"></textarea>
+    <label>Skills</label><textarea id="r_skills"></textarea>
+    <label>Experience</label><textarea id="r_exp"></textarea>
+    <button class="btn" onclick="genResume()">Generate resume</button>
+    <div class="out" id="r_out">Your resume will appear here.</div>
+    <button class="btn ghost" onclick="saveText('resume.txt', document.getElementById('r_out').textContent)">Save as .txt</button>
+  </div>
+</section>
+
+<section class="tool" id="notes">
+  <h2>Notes Generator</h2><p class="sub">Paste a topic or textbook paragraph, get clean study notes.</p>
+  <div class="card">
+    <textarea id="n_in" style="min-height:140px" placeholder="Paste text here..."></textarea>
+    <button class="btn" onclick="genNotes()">Convert to notes</button>
+    <div class="out" id="n_out">Notes will appear here.</div>
+    <button class="btn ghost" onclick="navigator.clipboard.writeText(document.getElementById('n_out').textContent)">Copy</button>
+    <button class="btn ghost" onclick="saveText('notes.txt', document.getElementById('n_out').textContent)">Save .txt</button>
+  </div>
+</section>
+
+<section class="tool" id="slides">
+  <h2>Presentation Generator</h2><p class="sub">Enter a topic, get a slide-by-slide deck.</p>
+  <div class="card">
+    <input id="s_topic" type="text" placeholder="e.g. Photosynthesis">
+    <button class="btn" onclick="genSlides()">Generate slides</button>
+    <div id="s_view" style="display:none;margin-top:16px">
+      <div class="slidebox"><h3 id="s_title"></h3><div id="s_body"></div></div>
+      <div class="row" style="margin-top:10px"><button class="btn ghost" onclick="slideNav(-1)">Prev</button><span id="s_count" style="align-self:center"></span><button class="btn ghost" onclick="slideNav(1)">Next</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="tool" id="mindmap">
+  <h2>Mind Map Generator</h2><p class="sub">Paste a syllabus, get a hierarchical outline.</p>
+  <div class="card">
+    <textarea id="m_in" placeholder="Paste syllabus / topic list..."></textarea>
+    <button class="btn" onclick="genMap()">Build mind map</button>
+    <div class="out tree" id="m_out">Outline will appear here.</div>
+  </div>
+</section>
+
+<section class="tool" id="sheets">
+  <h2>Google Sheets Backend</h2><p class="sub">Read/write a live Google Sheet via an Apps Script Web App URL.</p>
+  <div class="card">
+    <label>Apps Script Web App URL</label><input id="sh_url" type="text" placeholder="https://script.google.com/macros/s/.../exec">
+    <button class="btn" onclick="loadSheet()">Load data</button>
+    <div id="sh_tablewrap" style="margin-top:14px"></div>
+    <div class="row" style="margin-top:14px"><input id="sh_new" type="text" placeholder="New row, comma-separated values"><button class="btn ghost" onclick="addRow()">Add row</button></div>
+    <button class="btn ghost" onclick="summarizeSheet()">Summarize with AI</button>
+    <div class="out" id="sh_summary" style="display:none"></div>
+  </div>
+</section>
+
+<section class="tool" id="quiz">
+  <h2>Quiz Generator</h2><p class="sub">Turn any topic or notes into a scored multiple-choice quiz.</p>
+  <div class="card">
+    <textarea id="q_in" placeholder="Topic or notes..."></textarea>
+    <button class="btn" onclick="genQuiz()">Generate quiz</button>
+    <div id="q_view" style="margin-top:16px"></div>
+  </div>
+</section>
+
+<section class="tool" id="chat">
+  <h2>Doubt-Solving Chatbot</h2><p class="sub">Ask a subject tutor anything, with context kept across turns.</p>
+  <div class="card">
+    <input id="c_subject" type="text" placeholder="Subject, e.g. Organic Chemistry" value="General Studies">
+    <div class="chatlog" id="c_log"></div>
+    <div class="row"><input id="c_msg" type="text" placeholder="Type your question..." onkeydown="if(event.key==='Enter')sendChat()"><button class="btn" onclick="sendChat()">Send</button></div>
+    <button class="btn ghost" onclick="clearChat()">Clear chat</button>
+  </div>
+</section>
+
+<section class="tool" id="flash">
+  <h2>Flashcard Generator</h2><p class="sub">Paste a topic, get flippable revision flashcards.</p>
+  <div class="card">
+    <input id="f_topic" type="text" placeholder="Topic or paste study text">
+    <button class="btn" onclick="genFlash()">Generate flashcards</button>
+    <div id="f_view" style="display:none">
+      <div class="flip-wrap"><div class="flip-card" id="f_card" onclick="flipCard()"><div class="flip-inner"><div class="flip-face" id="f_front"></div><div class="flip-face flip-back" id="f_back"></div></div></div></div>
+      <div class="row"><button class="btn ghost" onclick="flashNav()">Next</button><button class="btn ghost" onclick="flashShuffle()">Shuffle</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="tool" id="planner">
+  <h2>Study Planner</h2><p class="sub">Turn your subjects and free hours into a day-wise timetable.</p>
+  <div class="card">
+    <label>Subjects (comma-separated)</label><input id="p_subs" type="text" placeholder="Maths, Physics, English">
+    <div class="row"><div><label>Hours available per day</label><input id="p_hours" type="number" value="3"></div><div><label>Exam / target date</label><input id="p_date" type="date"></div></div>
+    <button class="btn" onclick="genPlan()">Generate plan</button>
+    <div id="p_out" style="margin-top:16px;overflow-x:auto"></div>
+  </div>
+</section>
+
+<section class="tool" id="ocr">
+  <h2>Notes Summarizer from Photos</h2><p class="sub">Preview your photo, paste/correct the extracted text, then summarize.</p>
+  <div class="card">
+    <label>Upload a photo of your notes</label><input id="o_file" type="file" accept="image/*" onchange="ocrPreview(event)">
+    <img id="o_img" style="max-width:100%;border-radius:8px;margin-top:10px;display:none">
+    <label>Extracted / corrected text</label><textarea id="o_text" style="min-height:120px" placeholder="Type or paste the note text here (in-browser OCR isn't loaded in this lean build — paste manually)"></textarea>
+    <button class="btn" onclick="genOcrSummary()">Summarize</button>
+    <div class="out" id="o_out">Summary will appear here.</div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+function goto(id){
+  document.querySelectorAll('.navbtn').forEach(x=>x.classList.toggle('active', x.dataset.t===id));
+  document.querySelectorAll('.tool').forEach(x=>x.classList.toggle('active', x.id===id));
+  window.scrollTo({top:0});
+}
+document.querySelectorAll('.navbtn').forEach(b=>b.addEventListener('click',()=>goto(b.dataset.t)));
+
+let sampleApi=null, dlApi=null;
+async function ai(){ if(sampleApi===null){ try{ sampleApi = await window.claude.use('sample'); }catch(e){ sampleApi=false; } } return sampleApi||null; }
+async function dl(){ if(dlApi===null){ try{ dlApi = await window.claude.use('downloads'); }catch(e){ dlApi=false; } } return dlApi||null; }
+async function saveText(filename,text){
+  const d = await dl();
+  if(!d){ const w=window.open(); if(w){w.document.write('<pre style="white-space:pre-wrap;font-family:sans-serif">'+text.replace(/</g,'&lt;')+'</pre>');} return; }
+  try{ await d.save({filename, data:text}); }catch(e){}
+}
+async function askText(prompt, outEl){
+  outEl.textContent='Thinking…';
+  const s = await ai();
+  if(!s){ outEl.textContent='AI isn\'t available in this view.'; return; }
+  try{
+    const r = await s(prompt, { onText:({text})=>{ outEl.textContent=text; } });
+    outEl.textContent = r.text;
+  }catch(e){ outEl.textContent = 'Something went wrong: '+(e.message||e.code||'try again'); }
+}
+async function askJSON(prompt){
+  const s = await ai();
+  if(!s) return null;
+  try{ return await s.json(prompt); }catch(e){ return null; }
+}
+
+// Resume
+async function genResume(){
+  const out=document.getElementById('r_out');
+  const p=`Write a professional, well-formatted plain-text resume from this data. Use clear section headers and concise bullet points.
+Name: ${val('r_name')}
+Contact: ${val('r_contact')}
+Objective: ${val('r_obj')}
+Education: ${val('r_edu')}
+Skills: ${val('r_skills')}
+Experience: ${val('r_exp')}`;
+  askText(p, out);
+}
+function val(id){ return document.getElementById(id).value; }
+
+// Notes
+async function genNotes(){
+  const out=document.getElementById('n_out');
+  askText(`Convert this text into short, well-organized bullet-point study notes with clear headings:\n\n${val('n_in')}`, out);
+}
+
+// Slides
+let slideData=[], slideIdx=0;
+async function genSlides(){
+  const topic=val('s_topic'); if(!topic) return;
+  document.getElementById('s_view').style.display='none';
+  const data = await askJSON(`Create a 6-slide presentation outline on "${topic}". Return ONLY JSON: an array of 6 objects, each {"title": string, "bullets": [3-4 short strings]}. No markdown, no commentary.`);
+  slideData = Array.isArray(data) ? data : [{title:'Could not generate slides', bullets:['Try again or rephrase the topic.']}];
+  slideIdx=0; document.getElementById('s_view').style.display='block'; renderSlide();
+}
+function renderSlide(){
+  const s=slideData[slideIdx];
+  document.getElementById('s_title').textContent = s.title||'';
+  document.getElementById('s_body').innerHTML = '<ul>'+(s.bullets||[]).map(b=>'<li>'+escapeHtml(b)+'</li>').join('')+'</ul>';
+  document.getElementById('s_count').textContent = (slideIdx+1)+' / '+slideData.length;
+}
+function slideNav(d){ slideIdx=(slideIdx+d+slideData.length)%slideData.length; renderSlide(); }
+function escapeHtml(t){ return String(t).replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+
+// Mind map
+async function genMap(){
+  const out=document.getElementById('m_out'); out.textContent='Thinking…';
+  const data = await askJSON(`Break this syllabus into a nested outline: main topics -> sub-topics -> key points. Return ONLY JSON: {"topic": string, "children": [ {"topic": string, "children": [ {"topic": string, "children": []} ] } ]}.\n\n${val('m_in')}`);
+  out.innerHTML = data ? renderTree(data) : 'Could not generate an outline. Try again.';
+}
+function renderTree(node){
+  let html = '<div>'+escapeHtml(node.topic||'')+'</div>';
+  if(node.children && node.children.length) html += '<ul>'+node.children.map(c=>'<li>'+renderTree(c)+'</li>').join('')+'</ul>';
+  return html;
+}
+
+// Sheets
+const DEMO_ROWS=[{Name:'Aarav',Subject:'Maths',Score:82},{Name:'Diya',Subject:'Science',Score:91},{Name:'Kabir',Subject:'English',Score:76}];
+let sheetRows=DEMO_ROWS.slice();
+function renderTable(){
+  const wrap=document.getElementById('sh_tablewrap');
+  if(!sheetRows.length){ wrap.innerHTML='<p class="sub">No rows yet.</p>'; return; }
+  const cols=Object.keys(sheetRows[0]);
+  wrap.innerHTML='<table><tr>'+cols.map(c=>'<th>'+c+'</th>').join('')+'</tr>'+
+    sheetRows.map(r=>'<tr>'+cols.map(c=>'<td>'+escapeHtml(r[c])+'</td>').join('')+'</tr>').join('')+'</table>';
+}
+renderTable();
+async function loadSheet(){
+  const url=val('sh_url'); const wrap=document.getElementById('sh_tablewrap');
+  if(!url){ renderTable(); return; }
+  wrap.innerHTML='<p class="sub">Loading…</p>';
+  try{
+    const res=await fetch(url); const data=await res.json();
+    sheetRows = Array.isArray(data) ? data : (data.rows||DEMO_ROWS);
+  }catch(e){
+    sheetRows = DEMO_ROWS.slice();
+    wrap.innerHTML='<p class="sub">Live connection wasn\'t reachable from this preview, so demo data is shown. Your deployed Apps Script URL will work once this page is used outside the sandbox.</p>';
+    renderTable(); return;
+  }
+  renderTable();
+}
+function addRow(){
+  const raw=val('sh_new'); if(!raw) return;
+  const parts=raw.split(',').map(s=>s.trim());
+  const cols=sheetRows.length?Object.keys(sheetRows[0]):['col1','col2','col3'];
+  const row={}; cols.forEach((c,i)=>row[c]=parts[i]||'');
+  sheetRows.push(row); document.getElementById('sh_new').value=''; renderTable();
+}
+async function summarizeSheet(){
+  const out=document.getElementById('sh_summary'); out.style.display='block';
+  askText(`Give a 2-3 sentence summary and one trend/insight about this data:\n${JSON.stringify(sheetRows)}`, out);
+}
+
+// Quiz
+let quizData=[], quizIdx=0, quizScore=0;
+async function genQuiz(){
+  const view=document.getElementById('q_view'); view.innerHTML='<p class="sub">Generating quiz…</p>';
+  const data = await askJSON(`Create 5 multiple-choice questions on: ${val('q_in')}. Return ONLY JSON: an array of {"q": string, "options": [4 strings], "answer": index of correct option 0-3}.`);
+  quizData = Array.isArray(data)&&data.length ? data : null;
+  if(!quizData){ view.innerHTML='<p class="sub">Could not generate a quiz. Try again.</p>'; return; }
+  quizIdx=0; quizScore=0; renderQuiz();
+}
+function renderQuiz(){
+  const view=document.getElementById('q_view');
+  if(quizIdx>=quizData.length){ view.innerHTML='<h3>Score: '+quizScore+' / '+quizData.length+'</h3>'; return; }
+  const q=quizData[quizIdx];
+  view.innerHTML='<p><strong>Q'+(quizIdx+1)+'.</strong> '+escapeHtml(q.q)+'</p>'+
+    q.options.map((o,i)=>'<button class="opt" onclick="answerQuiz('+i+')">'+escapeHtml(o)+'</button>').join('');
+}
+function answerQuiz(i){
+  const q=quizData[quizIdx]; const btns=document.querySelectorAll('#q_view .opt');
+  btns.forEach((b,idx)=>{ if(idx===q.answer) b.classList.add('correct'); else if(idx===i) b.classList.add('wrong'); b.onclick=null; });
+  if(i===q.answer) quizScore++;
+  setTimeout(()=>{ quizIdx++; renderQuiz(); }, 900);
+}
+
+// Chat
+let chatHistory=[];
+function clearChat(){ chatHistory=[]; document.getElementById('c_log').innerHTML=''; }
+async function sendChat(){
+  const inp=document.getElementById('c_msg'); const msg=inp.value.trim(); if(!msg) return;
+  inp.value=''; addBubble('u', msg);
+  chatHistory.push({role:'user', content: chatHistory.length===0 ? `You are a helpful, patient tutor for ${val('c_subject')}. Explain simply with small examples.\n\nStudent question: ${msg}` : msg});
+  const s = await ai();
+  const el = addBubble('a', 'Thinking…');
+  if(!s){ el.textContent='AI isn\'t available in this view.'; return; }
+  try{
+    const r = await s(chatHistory, { onText:({text})=>{ el.textContent=text; } });
+    chatHistory.push({role:'assistant', content:r.text});
+  }catch(e){ el.textContent='Something went wrong. Try again.'; }
+}
+function addBubble(cls, text){
+  const log=document.getElementById('c_log'); const d=document.createElement('div');
+  d.className='bubble '+cls; d.textContent=text; log.appendChild(d); log.scrollTop=log.scrollHeight; return d;
+}
+
+// Flashcards
+let flashData=[], flashIdx=0;
+async function genFlash(){
+  const topic=val('f_topic'); if(!topic) return;
+  document.getElementById('f_view').style.display='none';
+  const data = await askJSON(`Create 8 flashcards (question, short answer) for revising: ${topic}. Return ONLY JSON: array of {"q":string,"a":string}.`);
+  flashData = Array.isArray(data)&&data.length ? data : [{q:'Could not generate cards',a:'Try again'}];
+  flashIdx=0; document.getElementById('f_view').style.display='block'; renderFlash();
+}
+function renderFlash(){
+  const c=document.getElementById('f_card'); c.classList.remove('on');
+  document.getElementById('f_front').textContent=flashData[flashIdx].q;
+  document.getElementById('f_back').textContent=flashData[flashIdx].a;
+}
+function flipCard(){ document.getElementById('f_card').classList.toggle('on'); }
+function flashNav(){ flashIdx=(flashIdx+1)%flashData.length; renderFlash(); }
+function flashShuffle(){ flashData.sort(()=>Math.random()-0.5); flashIdx=0; renderFlash(); }
+
+// Planner
+const SUBCOLORS=['#4EA1FF','#7C8CFF','#6EE7FF','#5FD9A4','#A78BFA','#38BDF8'];
+async function genPlan(){
+  const subs=val('p_subs'); const hours=val('p_hours'); const date=val('p_date');
+  const out=document.getElementById('p_out'); out.innerHTML='<p class="sub">Building your plan…</p>';
+  const data = await askJSON(`Build a 7-day study timetable for subjects [${subs}], with ${hours} study hours available per day, working toward a target date of ${date||'soon'}. Return ONLY JSON: array of 7 {"day": string, "slots": [ {"time": string, "subject": string} ] }.`);
+  if(!Array.isArray(data)){ out.innerHTML='<p class="sub">Could not generate a plan. Try again.</p>'; return; }
+  const subList = subs.split(',').map(s=>s.trim());
+  out.innerHTML = '<table><tr><th>Day</th><th>Schedule</th></tr>'+data.map(d=>
+    '<tr><td>'+escapeHtml(d.day)+'</td><td>'+(d.slots||[]).map(s=>{
+      const ci=subList.indexOf(s.subject); const col=SUBCOLORS[ci>=0?ci%SUBCOLORS.length:0];
+      return '<span class="pill" style="background:'+col+';color:#06101F">'+escapeHtml(s.time)+' '+escapeHtml(s.subject)+'</span>';
+    }).join(' ')+'</td></tr>').join('')+'</table>';
+}
+
+// OCR (manual-text fallback, no bundled OCR engine to keep this build lean)
+function ocrPreview(e){
+  const f=e.target.files[0]; if(!f) return;
+  const img=document.getElementById('o_img'); img.src=URL.createObjectURL(f); img.style.display='block';
+}
+async function genOcrSummary(){
+  const out=document.getElementById('o_out');
+  const text=val('o_text');
+  if(!text){ out.textContent='Paste or type the note text above first.'; return; }
+  askText(`Summarize these notes into 5-8 crisp key points:\n\n${text}`, out);
+}
+</script>
+</body>
+</html>
